@@ -1,0 +1,10 @@
+@import "bootstrap/scss/bootstrap";
+
+.icon-hover-up {
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+  cursor: pointer;
+}
+.btn:hover .icon-hover-up {
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+  transform: translateY(-6px);
+}
