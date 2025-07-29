@@ -34,7 +34,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     // Login function
     const login = async (inputs: LoginInputs) => {
         try {
-            const res = await axios.post("http://localhost:3000/api/auths/login", inputs, { withCredentials: true });
+            const res = await axios.post("/api/auths/login", inputs, { withCredentials: true });
             setCurrentUser(res.data); // Set the current user with the response data
             setError(null) // Clear any previous error message
             //navigate("/admin_panel"); // Redirect to the login page after successful registration
@@ -54,7 +54,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     // Logout function 
     const logout = async () => {
         try {
-            await axios.post("http://localhost:3000/api/auths/logout", {}, { withCredentials: true });
+            await axios.post("/api/auths/logout", {}, { withCredentials: true });
             setCurrentUser(null); // Clear the current user
         } catch (err) {
             console.error("Logout failed:", err);
