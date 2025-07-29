@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'http://localhost:3000', // Or the port your server runs on
+        target: 'https://documentaionportalbackend.onrender.com', // Or the port your server runs on
         changeOrigin: true,
       },
     },
