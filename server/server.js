@@ -8,9 +8,9 @@
     import cookieParser from 'cookie-parser';
 
     const app = express();
-    const port = 3000; // Or another port
+    const port = process.env.PORT || 3000; // Or another port
     const corsOptions = {
-      origin: 'http://localhost:5173', // Replace with your frontend URL
+      origin: 'https://documentaionportalfrontend.onrender.com', // Replace with your frontend URL
       credentials: true,
       methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
       preflightContinue: false,
