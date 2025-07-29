@@ -24,7 +24,7 @@ function Admin_panel() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res= await axios.get("http://localhost:3000/api/posts");
+        const res= await axios.get("/api/posts");
         //console.log("Api response new",res.data.data);
         setPosts(res.data.data);
         //console.log(posts);
@@ -80,7 +80,7 @@ function Admin_panel() {
       // Fetch the blog post data for editing
       const fetchPost = async () => {
         try {
-          const res = await axios.get(`http://localhost:3000/api/posts/${blog_id}`);
+          const res = await axios.get(`/api/posts/${blog_id}`);
           //setBlogTitle(res.data.title);
           setBlogContent(res.data.data.description);
           //console.log("blog_content",res.data.data.description);
@@ -103,7 +103,7 @@ function Admin_panel() {
   }, [editor_type, blog_id]);
   const handleDelete = async(id: number) => {
     try {
-          const res = await axios.delete(`http://localhost:3000/api/posts/${id}`,{withCredentials: true});
+          const res = await axios.delete(`/api/posts/${id}`,{withCredentials: true});
           console.log(res.data.message);
           setEditorType("create");
         } catch (err) {

@@ -16,7 +16,7 @@ function Home({apiMessage} : {apiMessage: string}) {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res= await axios.get("http://localhost:3000/api/posts");
+        const res= await axios.get("/api/posts");
         //console.log("Api response new",res.data.data);
         setPosts(res.data.data);
         //console.log(posts);
@@ -37,7 +37,7 @@ function Home({apiMessage} : {apiMessage: string}) {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res= await axios.get(`http://localhost:3000/api/posts/${selectedPost?.idpost}`);
+        const res= await axios.get(`/api/posts/${selectedPost?.idpost}`);
         //console.log("Api response new",res.data.data);
         setBlogContent(res.data.data.description);
         //console.log(posts);

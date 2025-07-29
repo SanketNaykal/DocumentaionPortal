@@ -24,7 +24,7 @@ function register() {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         try {
-            const res = await axios.post("http://localhost:3000/api/auths/register", inputs);
+            const res = await axios.post("/api/auths/register", inputs);
             console.log(res)
             setError(null) // Clear any previous error message
             navigate("/login"); // Redirect to the login page after successful registration

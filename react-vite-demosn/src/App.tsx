@@ -17,7 +17,7 @@ import axios from "axios";
 function App() {
   const [message, setMessage] = useState("");
   const faychAPI = async () => {
-    const response = await axios.get("http://localhost:3000/api/hello"); //Demo data https://jsonplaceholder.typicode.com/posts
+    const response = await axios.get("/api/hello"); //Demo data https://jsonplaceholder.typicode.com/posts
     console.log(response.data);
     setMessage(response.data.message);
   };
