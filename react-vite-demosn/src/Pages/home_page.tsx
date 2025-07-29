@@ -62,10 +62,10 @@ function Home({apiMessage} : {apiMessage: string}) {
   }, [selectedPost]);
   const apimessage = apiMessage;
     const sidebar_menuItems = [
-        { label: "Home", href: "#home" },
-        { label: "About", href: "#about" },
-        { label: "Services", href: "#services" },
-        { label: "Contact", href: "#contact" },
+        { label: "Home"},
+        { label: "About"},
+        { label: "Services"},
+        { label: "Contact"},
       ];
   return (
     <Fragment>
@@ -76,7 +76,7 @@ function Home({apiMessage} : {apiMessage: string}) {
           <div className="col-3 bg-secondary text-white" style={{ position: "sticky", top: 0 }}>
             <div className="sidebar-data">
               <div className="flex-shrink-0">
-                <Sidebar sidebar_menuItems={[]} sidebar_admin_buttons={posts.map((post) => ({ label: post.title, blogCode: post.code ?? null, onClick: () => handleSidebarClick(post.idpost) }))} sidebar_header="Subjects" sidebar_type="home_page"/>
+                <Sidebar sidebar_menuItems={posts.map((post) => ({ label: post.title, onClick: () => handleSidebarClick(post.idpost) }))} sidebar_admin_buttons={[]} sidebar_header="Subjects" sidebar_type="home_page"/>
               </div>
             </div>
           </div>

@@ -7,7 +7,7 @@ import "./sidebar.scss";
 import { Nav, Navbar } from "react-bootstrap";
 
 interface SidebarProps {
-  sidebar_menuItems: { label: string; href: string; onClick?: () => void}[];
+  sidebar_menuItems: { label: string; onClick?: () => void}[];
   sidebar_header: string;
   sidebar_type: string;
   sidebar_admin_buttons: { label: string, blogCode: string | null; onClick?: () => void}[];
@@ -80,7 +80,7 @@ function Sidebar({sidebar_menuItems, sidebar_header, sidebar_type, sidebar_admin
                   ) : (
                     sidebar_menuItems.map((item, index) => (
                       <li className="mb-1" key={index}>
-                        <a href={item.href} style={{ textDecoration: "none" }} className="text-white" onClick={item.onClick}>
+                        <a style={{ textDecoration: "none" }} className="text-white" onClick={item.onClick}>
                           <span>{item.label}</span>
                         </a>
                       </li>
