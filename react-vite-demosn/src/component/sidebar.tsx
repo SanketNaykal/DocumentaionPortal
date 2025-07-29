@@ -7,10 +7,10 @@ import "./sidebar.scss";
 import { Nav, Navbar } from "react-bootstrap";
 
 interface SidebarProps {
-  sidebar_menuItems: { label: string; href: string }[];
+  sidebar_menuItems: { label: string; href: string; onClick?: () => void}[];
   sidebar_header: string;
   sidebar_type: string;
-  sidebar_admin_buttons: { label: string, blogCode: string | null}[];
+  sidebar_admin_buttons: { label: string, blogCode: string | null; onClick?: () => void}[];
 }
 
 function Sidebar({sidebar_menuItems, sidebar_header, sidebar_type, sidebar_admin_buttons}: SidebarProps) {
