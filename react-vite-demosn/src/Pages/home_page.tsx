@@ -9,7 +9,12 @@ import { AuthContext } from "../context/authContext";
 import axios from "axios";
 
 function Home({apiMessage} : {apiMessage: string}) {
-  const {currentUser} = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  if (!auth) {
+    // Handle missing context (e.g., show loading or error)
+    return <div>Loading...</div>;
+  }
+  const { currentUser } = auth;
   type Post = {
     idpost:number;
     title:string;
@@ -71,7 +76,7 @@ function Home({apiMessage} : {apiMessage: string}) {
           <div className="col-3 bg-secondary text-white" style={{ position: "sticky", top: 0 }}>
             <div className="sidebar-data">
               <div className="flex-shrink-0">
-                <Sidebar sidebar_menuItems={posts.map((post) => ({ label: post.title, onClick: () => handleSidebarClick(post.idpost) }))} sidebar_header="Subjects" sidebar_type="home_page"/>
+                <Sidebar sidebar_menuItems={[]} sidebar_admin_buttons={posts.map((post) => ({ label: post.title, blogCode: post.code ?? null, onClick: () => handleSidebarClick(post.idpost) }))} sidebar_header="Subjects" sidebar_type="home_page"/>
               </div>
             </div>
           </div>

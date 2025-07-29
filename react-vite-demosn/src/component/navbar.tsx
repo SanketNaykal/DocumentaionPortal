@@ -14,8 +14,12 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import { green, lightGreen } from "@mui/material/colors";
 
 function CustomNavbar() {
-  const {currentUser} = useContext(AuthContext);
-  const {logout} = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  if (!auth) {
+    // Handle missing context (e.g., show loading or error)
+    return <div>Loading...</div>;
+  }
+  const { currentUser, logout } = auth;
   return (
     <Fragment>
       <div className='container-fluid '>

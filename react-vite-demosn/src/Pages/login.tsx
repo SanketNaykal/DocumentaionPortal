@@ -17,8 +17,12 @@ function login() {
     })
     //const [err, setError] = useState<string | null>(null);
     const navigate = useNavigate();
-    const {login} = useContext(AuthContext);
-    const {err} = useContext(AuthContext);
+    const auth = useContext(AuthContext);
+    if (!auth) {
+      // Handle missing context (e.g., show loading or error)
+      return <div>Loading...</div>;
+    }
+    const { login, err } = auth;
     //console.log(currentUser);
                         // Define the type for the event parameter 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>)=> { 

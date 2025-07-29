@@ -18,7 +18,12 @@ import { indigo, lightGreen, red } from "@mui/material/colors";
 import axios from "axios";
 
 function Admin_panel() {
-  const {currentUser} = useContext(AuthContext);
+  const auth = useContext(AuthContext);
+  if (!auth) {
+    // Handle missing context (e.g., show loading or error)
+    return <div>Loading...</div>;
+  }
+  const { currentUser } = auth;
   type Post = {
     idpost:number;
     title:string;
