@@ -19,8 +19,15 @@ import axios from "axios";
 
 function Admin_panel() {
   const {currentUser} = useContext(AuthContext);
-  const [posts, setPosts] = useState([]);
-  const [selectedPost, setSelectedPost] = useState(null);
+  type Post = {
+    idpost:number;
+    title:string;
+    date:string;
+    uid: number;
+    code:string;
+  };
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [selectedPost, setSelectedPost] = useState<Post | null>(null);
   useEffect(() => {
     const fetchPosts = async () => {
       try {
