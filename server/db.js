@@ -1,5 +1,6 @@
 import mysql from "mysql2/promise";
 import pg from "pg";
+import { Pool } from "pg";
 // export const db = mysql.createPool({
 //     host: "localhost",
 //     user: "root",
