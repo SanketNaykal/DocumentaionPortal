@@ -28,13 +28,14 @@ interface AuthContextProviderProps {
     children: React.ReactNode;
 }
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
+    const API_BASE = import.meta.env.VITE_API_BASE || 'https://documentaionportalbackend.onrender.com';
 
     const [currentUser, setCurrentUser] = useState<User | null>(JSON.parse(localStorage.getItem("user") || "null"));
     const [err, setError] = useState<string | null>(null);
     // Login function
     const login = async (inputs: LoginInputs) => {
         try {
-            const res = await axios.post("/api/auths/login", inputs, { withCredentials: true });
+            const res = await axios.post(`${API_BASE}/api/auths/login`, inputs, { withCredentials: true });
             setCurrentUser(res.data); // Set the current user with the response data
             setError(null) // Clear any previous error message
             //navigate("/admin_panel"); // Redirect to the login page after successful registration
@@ -54,7 +55,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     // Logout function 
     const logout = async () => {
         try {
-            await axios.post("/api/auths/logout", {}, { withCredentials: true });
+            await axios.post(`${API_BASE}/api/auths/logout`, {}, { withCredentials: true });
             setCurrentUser(null); // Clear the current user
         } catch (err) {
             console.error("Logout failed:", err);
@@ -65,7 +66,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     }, [currentUser]);
 
     return (
-        <AuthContext.Provider value={{ currentUser, login, logout,err, setError }}>
+        <AuthContext.Provider value={{ currentUser, login, logout, err, setError }}>
             {children}
         </AuthContext.Provider>
     );

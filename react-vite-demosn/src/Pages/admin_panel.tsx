@@ -18,6 +18,7 @@ import { indigo, lightGreen, red } from "@mui/material/colors";
 import axios from "axios";
 
 function Admin_panel() {
+  const API_BASE = import.meta.env.VITE_API_BASE || 'https://documentaionportalbackend.onrender.com';
   const auth = useContext(AuthContext);
   if (!auth) {
     // Handle missing context (e.g., show loading or error)
@@ -36,7 +37,7 @@ function Admin_panel() {
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const res= await axios.get("/api/posts");
+        const res= await axios.get(`${API_BASE}/api/posts`);
         //console.log("Api response new",res.data.data);
         setPosts(res.data.data);
         //console.log(posts);
@@ -92,7 +93,7 @@ function Admin_panel() {
       // Fetch the blog post data for editing
       const fetchPost = async () => {
         try {
-          const res = await axios.get(`/api/posts/${blog_id}`);
+          const res = await axios.get(`${API_BASE}/api/posts/${blog_id}`);
           //setBlogTitle(res.data.title);
           setBlogContent(res.data.data.description);
           //console.log("blog_content",res.data.data.description);
@@ -115,7 +116,7 @@ function Admin_panel() {
   }, [editor_type, blog_id]);
   const handleDelete = async(id: number) => {
     try {
-          const res = await axios.delete(`/api/posts/${id}`,{withCredentials: true});
+          const res = await axios.delete(`${API_BASE}/api/posts/${id}`,{withCredentials: true});
           console.log(res.data.message);
           setEditorType("create");
         } catch (err) {

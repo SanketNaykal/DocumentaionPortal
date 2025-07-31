@@ -9,6 +9,7 @@ import "./register.scss";
 } */
 
 function register() {
+    const API_BASE = import.meta.env.VITE_API_BASE || 'https://documentaionportalbackend.onrender.com';
     const [inputs, setInputs] = useState({
         username: "",
         email: "",
@@ -24,7 +25,7 @@ function register() {
     const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>)=>{
         e.preventDefault();
         try {
-            const res = await axios.post("/api/auths/register", inputs);
+            const res = await axios.post(`${API_BASE}/api/auths/register`, inputs);
             console.log(res)
             setError(null) // Clear any previous error message
             navigate("/login"); // Redirect to the login page after successful registration

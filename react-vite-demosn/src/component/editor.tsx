@@ -25,6 +25,7 @@ interface editorProps {
 }
 
 function editor({editor_type, blog_id, blog_title, blog_content}: editorProps) {
+  const API_BASE = import.meta.env.VITE_API_BASE || 'https://documentaionportalbackend.onrender.com';
     const [value, setValue] = useState("");
     const [title, setTitle] = useState("");
     const [errMessage, setError] = useState<string | null>(null);
@@ -55,7 +56,7 @@ function editor({editor_type, blog_id, blog_title, blog_content}: editorProps) {
         try{
           if (editor_type === "edit") {
             // Logic to update the draft
-            await axios.put(`http://localhost:3000/api/posts/${blog_id}`, { title, content: value }, { withCredentials: true });
+            await axios.put(`${API_BASE}/api/posts/${blog_id}`, { title, content: value }, { withCredentials: true });
           }
         }catch(err){
             console.error("Error saving draft:", err);
@@ -65,8 +66,8 @@ function editor({editor_type, blog_id, blog_title, blog_content}: editorProps) {
             // Logic to create a new draft
             console.log("Creating new draft");
             console.log("Draft saved:", { title, content: value });
-            await axios.post(`http://localhost:3000/api/posts`, { title, content: value, date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss") }, { withCredentials: true });
-            const setblogcode = await axios.post(`http://localhost:3000/api/processedDatas/setNewBlogCode/${blog_id}`)
+            await axios.post(`${API_BASE}/api/posts`, { title, content: value, date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss") }, { withCredentials: true });
+            const setblogcode = await axios.post(`${API_BASE}/api/processedDatas/setNewBlogCode/${blog_id}`)
             console.log("lastBlogId:", setblogcode.data);
           }
         }catch(err){
@@ -90,8 +91,8 @@ function editor({editor_type, blog_id, blog_title, blog_content}: editorProps) {
             // Logic to create a new draft
             console.log("Creating new draft");
             console.log("Draft saved:", { title, content: value });
-            await axios.post(`http://localhost:3000/api/posts`, { title, content: value, date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss") }, { withCredentials: true });
-            const setblogcode = await axios.post(`http://localhost:3000/api/processedDatas/setNewBlogCode`)
+            await axios.post(`${API_BASE}api/posts`, { title, content: value, date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss") }, { withCredentials: true });
+            const setblogcode = await axios.post(`${API_BASE}api/processedDatas/setNewBlogCode`)
             console.log("lastBlogId:", setblogcode.data.data);
           }
         }catch(err){
