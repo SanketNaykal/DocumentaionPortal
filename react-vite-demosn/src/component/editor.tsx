@@ -91,8 +91,8 @@ function editor({editor_type, blog_id, blog_title, blog_content}: editorProps) {
             // Logic to create a new draft
             console.log("Creating new draft");
             console.log("Draft saved:", { title, content: value });
-            await axios.post(`${API_BASE}api/posts`, { title, content: value, date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss") }, { withCredentials: true });
-            const setblogcode = await axios.post(`${API_BASE}api/processedDatas/setNewBlogCode`)
+            await axios.post(`${API_BASE}/api/posts`, { title, content: value, date: moment(Date.now()).format("YYYY-MM-DD HH:mm:ss") }, { withCredentials: true });
+            const setblogcode = await axios.post(`${API_BASE}/api/processedDatas/setNewBlogCode`)
             console.log("lastBlogId:", setblogcode.data.data);
           }
         }catch(err){
