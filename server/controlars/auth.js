@@ -56,8 +56,7 @@ export const login = async (req, res) => {
         res.cookie('access_token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
-            sameSite: 'lax',
-            
+            sameSite: 'None'
         }).status(200).json(user[0]);
         // Return success response with token
         //return res.status(200).json({ message: 'Login successful!', token });
