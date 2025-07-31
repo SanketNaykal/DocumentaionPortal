@@ -14,8 +14,8 @@ dotenv.config();
 export const register = async (req, res) => {
     try {
         // Check existing user
-        const q1 = 'SELECT * FROM `user` WHERE `useremail` = ? OR `username` = ?';
-        const [existingUser] = await db.query(q1, [req.body.email, req.body.username]);
+        const q1 = 'SELECT * FROM "ameyzingengineer"."user" WHERE "useremail" = $1 OR "username" = $2';
+        const { rows: existingUser } = await db.query(q1, [req.body.email, req.body.username]);
     
         if (existingUser.length) {
           return res.status(409).json({message: 'User already exists!'});
@@ -25,8 +25,8 @@ export const register = async (req, res) => {
         const salt = bcrypt.genSaltSync(10);
         const hash = bcrypt.hashSync(req.body.password, salt);
         //register user
-        const q2 = 'INSERT INTO `user`(`username`, `useremail`, `userpassword`) VALUES (?, ?, ?)';
-        const [result] = await db.query(q2, [req.body.username, req.body.email, hash]);
+        const q2 = 'INSERT INTO "ameyzingengineer"."user"("username", "useremail", "userpassword") VALUES ($1, $2, $3)';
+        const { rows: result } = await db.query(q2, [req.body.username, req.body.email, hash]);
         return res.status(200).json('User has been created.');
     } catch (err) {
         console.error(err);
@@ -37,8 +37,8 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
     try {
         // Check if user exists
-        const q = 'SELECT * FROM `user` WHERE `useremail` = ?';
-        const [user] = await db.query(q, [req.body.email]);
+        const q = 'SELECT * FROM "ameyzingengineer"."user" WHERE "useremail" = $1';
+        const { rows: user } = await db.query(q, [req.body.email]);
 
         if (user.length === 0) {
             return res.status(404).json({ message: 'User not found!' });
@@ -71,5 +71,5 @@ export const logout = (req, res) => {
     res.clearCookie('access_token', { 
         sameSite: 'none',
         secure: true 
-    }).status(200).json({message:'User has been logged out.'});
+    }).status(200).json({ message: 'User has been logged out.'});
 }

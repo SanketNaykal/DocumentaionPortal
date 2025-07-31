@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 
 export const getPost = async (req, res,) => {
     try{
-        const q1 = 'SELECT `username`,`title`,`description`,`date` FROM `ameyzingengineer(lms)`.`user` u join `ameyzingengineer(lms)`.`post` p on u.`iduser` = p.`uid` where p.`idpost`= ?;';
-        const [post] = await db.query(q1, [req.params.id]);
+        const q1 = 'SELECT "username","title","description","date" FROM "ameyzingengineer"."user" u join "ameyzingengineer"."post" p on u."iduser" = p."uid" where p."idpost"= $1;';
+        const { rows: post} = await db.query(q1, [req.params.id]);
         if(post.length){
             return res.status(200).json({ data: post[0]});
         }
@@ -15,8 +15,8 @@ export const getPost = async (req, res,) => {
 }
 export const getPosts = async (req, res) => {
     try{
-        const q1 = 'SELECT `idpost`,`title`,`date`,`uid`,`code` FROM `ameyzingengineer(lms)`.post;';
-        const [allPost] = await db.query(q1);
+        const q1 = 'SELECT "idpost","title","date","uid","code" FROM "ameyzingengineer"."post";';
+        const { rows: allPost } = await db.query(q1);
         if(allPost.length){
             return res.status(200).json({ data: allPost });
         }
@@ -31,11 +31,11 @@ export const addPost = async (req, res) => {
         if (!token) {
             return res.status(401).json({ message: 'Unauthorized!' });
         }
-        const q1 = 'INSERT INTO `ameyzingengineer(lms)`.`post` (`title`, `description`, `date`, `uid`) VALUES (?, ?, ?, ?);';
+        const q1 = 'INSERT INTO "ameyzingengineer"."post" ("title", "description", "date", "uid") VALUES ($1, $2, $3, $4);';
         const { title, content, date } = req.body;
         try {
             const user = jwt.verify(token, process.env.JWT_SECRET);
-            const [result] = await db.query(q1, [title, content, date, user.id]);
+            const { rows: result } = await db.query(q1, [title, content, date, user.id]);
             if (result.affectedRows === 0) {
                 return res.status(404).json({ message: 'Post is not created or you do not have permission to create this post.' });
             }
@@ -57,12 +57,12 @@ export const updatePost = async (req, res) => {
         if (!token) {
             return res.status(401).json({ message: 'Unauthorized!' });
         }
-        const q1 = 'UPDATE `ameyzingengineer(lms)`.`post` SET `title` = ?, `description` = ? WHERE `idpost` = ?;';
+        const q1 = 'UPDATE "ameyzingengineer"."post" SET "title" = $1, "description" = $2 WHERE "idpost" = $3;';
         const { title, content } = req.body;
         const postId = req.params.id;
         try {
             const user = jwt.verify(token, process.env.JWT_SECRET);
-            const [result] = await db.query(q1, [title, content, postId]);
+            const { rows: result } = await db.query(q1, [title, content, postId]);
             if (result.affectedRows === 0) {
                 return res.status(404).json({ message: 'Post not found or you do not have permission to update this post.' });
             }
@@ -87,8 +87,8 @@ export const deletePost = async (req, res) => {
         // Add your delete logic here
         try {
             const user = jwt.verify(token, process.env.JWT_SECRET);
-            const q1 = 'DELETE FROM `ameyzingengineer(lms)`.`post` WHERE `idpost` = ? AND `uid` = ?;';
-            const [result] = await db.query(q1, [req.params.id, user.id]);
+            const q1 = 'DELETE FROM "ameyzingengineer"."post" WHERE "idpost" = $1 AND "uid" = $2;';
+            const { rows: result } = await db.query(q1, [req.params.id, user.id]);
             if (result.affectedRows === 0) {
             return res.status(404).json({ message: 'Post not found or you do not have permission to delete this post.' });
             }
