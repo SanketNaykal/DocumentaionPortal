@@ -35,8 +35,8 @@ export const addPost = async (req, res) => {
         const { title, content, date } = req.body;
         try {
             const user = jwt.verify(token, process.env.JWT_SECRET);
-            const { rows: result } = await db.query(q1, [title, content, date, user.id]);
-            if (result.affectedRows === 0) {
+            const result = await db.query(q1, [title, content, date, user.id]);
+            if (result.rowCount === 0) {
                 return res.status(404).json({ message: 'Post is not created or you do not have permission to create this post.' });
             }
             return res.status(200).json({ message: 'Post created successfully!' });
@@ -64,8 +64,8 @@ export const updatePost = async (req, res) => {
         const postId = req.params.id;
         try {
             const user = jwt.verify(token, process.env.JWT_SECRET);
-            const { rows: result } = await db.query(q1, [title, content, postId]);
-            if (result.affectedRows === 0) {
+            const result = await db.query(q1, [title, content, postId]);
+            if (result.rowCount === 0) {
                 return res.status(404).json({ message: 'Post not found or you do not have permission to update this post.' });
             }
             return res.status(200).json({ message: 'Post updated successfully!' });
@@ -90,8 +90,8 @@ export const deletePost = async (req, res) => {
         try {
             const user = jwt.verify(token, process.env.JWT_SECRET);
             const q1 = 'DELETE FROM "ameyzingengineer"."post" WHERE "idpost" = $1 AND "uid" = $2;';
-            const { rows: result } = await db.query(q1, [req.params.id, user.id]);
-            if (result.affectedRows === 0) {
+            const result = await db.query(q1, [req.params.id, user.id]);
+            if (result.rowCount === 0) {
             return res.status(404).json({ message: 'Post not found or you do not have permission to delete this post.' });
             }
         } catch (err) {
